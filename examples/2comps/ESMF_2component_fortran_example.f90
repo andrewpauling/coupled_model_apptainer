@@ -15,10 +15,13 @@ program atm_ocean_coupling
   integer, parameter :: nx_atm=64, ny_atm=32
   integer, parameter :: nx_ocn=128, ny_ocn=64
 
+  rc = 0
+  
   !===========================
   ! Executable Section
   !===========================
   call ESMF_Initialize(logkindflag=ESMF_LOGKIND_MULTI, rc=rc)
+  !call ESMF_Initialize(rc=rc)
   if (rc /= ESMF_SUCCESS) stop "ESMF initialization failed"
 
   call ESMF_VMGetCurrent(vm, rc=rc)

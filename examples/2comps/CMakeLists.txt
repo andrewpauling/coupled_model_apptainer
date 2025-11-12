@@ -15,28 +15,19 @@ set(PNETCDF_LIBRARY "/software/lib/libpnetcdf.a")
 set(NETCDFF_LIBRARY "/software/lib/libnetcdff.a")
 set(HDF5_LIBRARY "/software/lib/libhdf5.a")
 set(HDF5_HL_LIBRARY "/software/lib/libhdf5_hl.a") 
+
+
+# MKL
+#list(APPEND CMAKE_MODULE_PATH "$ENV{MKLROOT}/lib/cmake/mkl")
+set(MKL_INTERFACE lp64)
+find_package(MKL CONFIG REQUIRED PATHS $ENV{MKLROOT})
+
 # -------------------------------------------------------------------------
 # Find MPI (required by ESMF)
 find_package(MPI REQUIRED Fortran)
 
-# Locate ESMF library and module paths
-if (NOT ESMF_DIR)
-  message(FATAL_ERROR "Please set ESMF_DIR to the root of your ESMF installation.")
-endif()
-
-set(ESMF_MOD_DIR "${ESMF_DIR}/mod/modO/Linux.intel.64.intelmpi.default")
-set(ESMF_LIB_DIR "${ESMF_DIR}/lib/libO/Linux.intel.64.intelmpi.default")
-set(ESMF_INC_DIR "${ESMF_DIR}/include")
-
-# Try to detect library name (adjust if your installation differs)
-find_library(ESMF_LIBRARY
-  NAMES esmf libesmf
-  HINTS ${ESMF_LIB_DIR} ${ESMF_DIR}/lib
-)
-
-if (NOT ESMF_LIBRARY)
-  message(FATAL_ERROR "Could not find ESMF library in ${ESMF_LIB_DIR}")
-endif()
+set(ESMF_MOD_DIR "/software/mod/modO/Linux.intel.64.intelmpi.default")
+set(ESMF_INC_DIR "/software/include")
 
 # -------------------------------------------------------------------------
 # Build executable
@@ -58,6 +49,7 @@ target_link_libraries(esmf_two_component_example PRIVATE
   ${PNETCDF_LIBRARY} ${NETCDFF_LIBRARY} ${NETCDF_LIBRARY}
   ${HDF5_HL_LIBRARY} ${HDF5_LIBRARY}
   MPI::MPI_Fortran 
+  MKL::MKL
   curl xml2 z stdc++
 )
 
@@ -74,10 +66,4 @@ message(STATUS "MPI library:  ${MPI_Fortran_LIBRARIES}")
 set_target_properties(esmf_two_component_example PROPERTIES
   Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules
 )
-
-# Example run instructions:
-#   mkdir build && cd build
-#   cmake -DESMF_DIR=/opt/esmf-8.6 .
-#   make
-#   mpirun -np 4 ./esmf_two_component_example
 
