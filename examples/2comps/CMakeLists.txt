@@ -31,19 +31,19 @@ set(ESMF_INC_DIR "/software/include")
 
 # -------------------------------------------------------------------------
 # Build executable
-add_executable(esmf_two_component_example
-  ESMF_2component_fortran_example.f90
+add_executable(2comp_example
+  2comp_example.f90
 )
 
 # Include directories
-target_include_directories(esmf_two_component_example PRIVATE
+target_include_directories(2comp_example PRIVATE
   ${ESMF_INC_DIR}
   ${ESMF_MOD_DIR}
   ${MPI_Fortran_INCLUDE_PATH}
 )
 
 # Link libraries
-target_link_libraries(esmf_two_component_example PRIVATE
+target_link_libraries(2comp_example PRIVATE
   ${ESMF_LIBRARY}
   ${PIOC_LIBRARY}
   ${PNETCDF_LIBRARY} ${NETCDFF_LIBRARY} ${NETCDF_LIBRARY}
@@ -63,7 +63,7 @@ message(STATUS "MPI library:  ${MPI_Fortran_LIBRARIES}")
 
 # -------------------------------------------------------------------------
 # Build type and flags
-set_target_properties(esmf_two_component_example PROPERTIES
+set_target_properties(2comp_example PROPERTIES
   Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules
 )
 
