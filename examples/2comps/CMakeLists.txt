@@ -6,12 +6,15 @@ project(ESMF_TwoComponentExample LANGUAGES Fortran)
 # Set this to your ESMF installation path if not found automatically.
 # For example:
 #   cmake -DESMF_DIR=/path/to/esmf .
-set(ESMF_DIR "/software" CACHE PATH "Path to ESMF installation directory")
+set(ESMF_LIBRARY "/software//lib/libO/Linux.intel.64.intelmpi.default/libesmf.a")
+set(PIOC_LIBRARY "/software//lib/libO/Linux.intel.64.intelmpi.default/libpioc.a")
 
 # NetCDF
 set(NETCDF_LIBRARY "/software/lib/libnetcdf.a")
 set(PNETCDF_LIBRARY "/software/lib/libpnetcdf.a")
 set(NETCDFF_LIBRARY "/software/lib/libnetcdff.a")
+set(HDF5_LIBRARY "/software/lib/libhdf5.a")
+set(HDF5_HL_LIBRARY "/software/lib/libhdf5_hl.a") 
 # -------------------------------------------------------------------------
 # Find MPI (required by ESMF)
 find_package(MPI REQUIRED Fortran)
@@ -51,13 +54,17 @@ target_include_directories(esmf_two_component_example PRIVATE
 # Link libraries
 target_link_libraries(esmf_two_component_example PRIVATE
   ${ESMF_LIBRARY}
+  ${PIOC_LIBRARY}
   ${PNETCDF_LIBRARY} ${NETCDFF_LIBRARY} ${NETCDF_LIBRARY}
-  MPI::MPI_Fortran
+  ${HDF5_HL_LIBRARY} ${HDF5_LIBRARY}
+  MPI::MPI_Fortran 
+  curl xml2 z stdc++
 )
 
 # Optionally show diagnostics
 message(STATUS "NetCDF libraries: ${PNETCDF_LIBRARY} ${NETCDFF_LIBRARY} ${NETCDF_LIBRARY}")
 message(STATUS "ESMF library: ${ESMF_LIBRARY}")
+message(STATUS "PIOC library: ${PIOC_LIBRARY}")
 message(STATUS "ESMF include: ${ESMF_INC_DIR}")
 message(STATUS "ESMF module:  ${ESMF_MOD_DIR}")
 message(STATUS "MPI library:  ${MPI_Fortran_LIBRARIES}")
