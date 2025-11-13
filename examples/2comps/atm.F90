@@ -127,22 +127,19 @@ module ATM
     type(ESMF_Grid)         :: gridIn
     type(ESMF_Grid)         :: gridOut
  
-    real(8) :: minCornerCoord(2), maxCornerCoord(2)                                                                                                                                                           
-    integer :: maxIndexOcn(2), maxIndexAtm(2), unit_num                                                                                                                                                                          
+    real(8) :: minCornerCoord(2), maxCornerCoord(2)
+    integer :: maxIndexOcn(2), maxIndexAtm(2), unit_num 
                                                                                                                                                                                                               
-    namelist /domain/ minCornerCoord, maxCornerCoord                                                                                                                                                          
-    namelist /ocn/ maxIndexOcn                                                                                                                                                                                
-    namelist /atm/ maxIndexAtm                                                                                                                                                                                
+    namelist /domain/ minCornerCoord, maxCornerCoord 
+    namelist /ocn/ maxIndexOcn
+    namelist /atm/ maxIndexAtm 
                                                                                                                                                                                                               
-    rc = ESMF_SUCCESS                                                                                                                                                                                         
-                                                                                                                                                                                                              
-    ! read the namelist                                                                                                                                                                                       
-    open(newunit=unit_num, file='2comp_time_example.nml', status='old', iostat=rc)                                                                                                                            
-    read(unit_num, nml=domain, iostat=rc)                                                                                                                                                                  
-    read(unit_num, nml=ocn, iostat=rc)                                                                                                                                                                     
-    close(unit_num)                                                                                                                                                                                           
- 
-    rc = ESMF_SUCCESS
+    rc = ESMF_SUCCESS 
+    ! read the namelist 
+    open(newunit=unit_num, file='2comp_time_example.nml', status='old', iostat=rc)     
+    read(unit_num, nml=domain, iostat=rc) 
+    read(unit_num, nml=ocn, iostat=rc)
+    close(unit_num)
 
     ! query for importState and exportState
     call NUOPC_ModelGet(model, importState=importState, &

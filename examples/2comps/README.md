@@ -3,13 +3,19 @@ i
 
 This example shows how to create a 2-component coupled model. 
 Each component lives on a different grid and data are 
-automatically regridded when imported. 
+automatically regridded onto the target component's grid. 
 
-|----------------
+The data exchanged are sea surface temperature, air pressure at sea_level (pmsl) and
+surface net downward shortwave flux (rsns). 
+
+
 | component | import  | export |
 | :-------- | :------ | :------|
 | atm       | sst     | pmsl, rsns |
 | ocn       | pmsl, rsns | sst  |
+
+
+In addition to atm and ocn, there is a thirsd component (esm), which handles the coupling.
 
 
 ## How to build the code
@@ -17,14 +23,15 @@ automatically regridded when imported.
 ```
 mkdir build
 cd build
-apptainer shell /nesi/nobackup/nesi99999/pletzera/sifs/esmfenv.sif
+apptainer shell /nesi/nobackup/nesi99999/pletzera/sifs/esmfenv86.sif
 cmake ..
 make
 ```
 
 ## How to run the code
 
+Under Apptainer:
 ```
-mpiexec -n 4 ./2com_time_example
+mpiexec -n 4 ./2comp_time_example
 ```
-
+This will generate `PET*.ESMF_LogFile`'s.
