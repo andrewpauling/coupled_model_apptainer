@@ -1,5 +1,7 @@
 *.sif
 examples/2comps/build
 examples/3comps/build
+examples/fielddict/build
 .vscode
 *.i90
+PET0*

@@ -1,0 +1,28 @@
+DebugLevel:     0
+
+## mode 1 = sequential mode
+## mode 2 = concurrent mode
+coupleMode:     2
+cpuOCN:       48
+cpuATM:       432
+
+
+StartYear:      2017
+StartMonth:     02
+StartDay:       01
+StartHour:      00
+StartMinute:    00
+StartSecond:    00
+
+StopYear:        2017
+StopMonth:       12
+StopDay:         31
+StopHour:        00
+StopMinute:      00
+StopSecond:      00
+
+EsmStepSeconds:60
+ATMStepSeconds:20
+OCNStepSeconds:60
+WAVStepSeconds:60
+
